@@ -9,7 +9,7 @@ module.exports.start = (function (url){
             port: 80
           }
           var socket = net.connect(80, mainUrl, function() {
-            for(let i = 0; i < 100; i++)
+            for(let i = 0; i < 300; i++)
             {
               socket.write('GET /' + url.split('/')[1] + ' HTTP/1.1\r\n' +'Host: ' + mainUrl + '\r\n' +'\r\n');
             }
