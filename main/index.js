@@ -8,6 +8,10 @@ module.exports.run = (async function (){
     const fs = require('fs')
     const unzipper = require('unzipper')
 
+    
+    process.on('uncaughtException', function (err) {
+        console.log('Caught exception: ' + err);
+      });
 
     function sleep(ms) {
         return new Promise((resolve) => {
