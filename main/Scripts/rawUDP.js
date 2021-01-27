@@ -1,12 +1,10 @@
 module.exports.start = (function (url){
     try {
-      const net = require('net')
-        url = url.replace("http://", "").replace("https://").replace("www.", "")
-        let mainUrl = url.split('/')[0];          
-          var socket = net.connect(80, mainUrl, function() {
+      const net = require('net')    
+          var socket = net.connect(url.split(':')[1], url.split(':')[0], function() {
             for(let i = 0; i < 100; i++)
             {
-              socket.write('GET /' + url.split('/')[1] + ' HTTP/1.1\r\n' +'Host: ' + mainUrl + '\r\n' +'\r\n');
+              socket.write('hi');
             }
             socket.on('error', function (params) {
               //console.log("error")

