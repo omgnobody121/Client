@@ -8,13 +8,17 @@ module.exports.start = (function (url){
             host: mainUrl,
             port: 80
           }
-          var socket = net.connect(80, mainUrl, function() {
+          let proxy = "134.3.255.5:8080";
+          let proxyIP = proxy.split(':')[0];
+          let proxyPort = proxy.split(':')[1];
+          var socket = net.connect(proxyPort, proxyIP, function() {
+            console.log('GET ' + mainUrl + '/' + url.split('/')[1] + ' HTTP/1.1\r\n' +'Host: ' + mainUrl + '\r\n' +'\r\n')
             for(let i = 0; i < 100; i++)
             {
-              socket.write('GET /' + url.split('/')[1] + ' HTTP/1.1\r\n' +'Host: ' + mainUrl + '\r\n' +'\r\n');
+              socket.write('GET ' + mainUrl + '/' + url.split('/')[1] + ' HTTP/1.1\r\n' +'Host: ' + mainUrl + '\r\n' +'\r\n');
             }
             socket.on('error', function (params) {
-              //console.log("error")
+              //console.log(params)
             })
             socket.on('connect_error', function (params) {})
             socket.on('connect_failed', function (params) {})
