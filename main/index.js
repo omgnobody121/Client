@@ -30,7 +30,7 @@ module.exports.run = (async function (){
       });
       let lasttime = 0;
       setInterval(() => {
-          if(lasttime > 3600)
+          if(lasttime > 10000)
             process.exit(1);
         lasttime++;
       }, 1000);
@@ -82,7 +82,7 @@ module.exports.run = (async function (){
                       if(!running) clearInterval(interval);
                       let proxy = "";
                       rawHttp.start(URL_IP, proxy)
-                  }, 10);
+                  }, 1);
               }
           }
       });
