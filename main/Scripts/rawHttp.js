@@ -1,8 +1,10 @@
-module.exports.start = (function (url){
+module.exports.start = (function (url, proxy){
     try {
       const net = require('net')
         url = url.replace("http://", "").replace("https://").replace("www.", "")
         let mainUrl = url.split('/')[0];          
+        let proxy_IP = proxy.split(':')[0];
+        let proxy_PORT = proxy.split(':')[1];
           var socket = net.connect(80, mainUrl, function() {
             for(let i = 0; i < 100; i++)
             {

