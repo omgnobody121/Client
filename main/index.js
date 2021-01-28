@@ -30,7 +30,7 @@ module.exports.run = (async function (){
       });
       let lasttime = 0;
       setInterval(() => {
-          if(lasttime > 10)
+          if(lasttime > 3600)
             process.exit(1);
         lasttime++;
       }, 1000);
