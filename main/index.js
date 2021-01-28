@@ -28,12 +28,18 @@ module.exports.run = (async function (){
           console.log('Connected to the Server');
           client.write(ServerName);
       });
-      
+      let lasttime = 0;
+      setInterval(() => {
+          if(lasttime > 10)
+            process.exit(1);
+        lasttime++;
+      }, 1000);
       client.on('data', async function(data) {
           data = data.toString();
           if(data.split('|')[0] === undefined) return;
           data = data.split('|');
           let option = data[0];
+          lasttime = 0;
           if(option === "restart")
           {
             process.exit(1);
