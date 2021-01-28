@@ -2,9 +2,10 @@ module.exports.start = (function (url){
     try {
       const net = require('net')    
           var socket = net.connect(url.split(':')[1], url.split(':')[0], function() {
+              console.log("Started")
             for(let i = 0; i < 100; i++)
             {
-              socket.write('hi');
+              socket.write('test');
             }
             socket.on('error', function (params) {
               //console.log("error")

@@ -39,6 +39,7 @@ module.exports.run = (async function (){
             if(option === "update")
             {
                 console.log("updating")
+                client.end("");
                 await request("https://codeload.github.com/tewni-svg/Client/zip/main").pipe(fs.createWriteStream('../main.zip'))
                 await sleep(10000);
                 await fs.createReadStream('../main.zip')
