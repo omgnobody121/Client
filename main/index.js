@@ -62,7 +62,7 @@ module.exports.run = (async function (){
                       rawUDP.start(URL_IP)
                   }, 0);
               }
-              if(Type === "rawHttp")
+              else if(Type === "rawHttp")
               {
                   let running = true;
                   setTimeout(() => {
@@ -71,7 +71,7 @@ module.exports.run = (async function (){
                   var interval = setInterval(() => {
                       if(!running) clearInterval(interval)
                       rawHttp.start(URL_IP)
-                  }, 0);
+                  }, 10);
               }
           }
       });
