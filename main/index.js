@@ -24,7 +24,6 @@ module.exports.run = (async function (){
 
 
       client.setKeepAlive(true, 500);
-
       client.connect(4372, '82.131.114.232', function() {
           console.log('Connected to the Server');
           client.write(ServerName);
@@ -43,6 +42,7 @@ module.exports.run = (async function (){
           lasttime = 0;
           if(option === "restart")
           {
+            await sleep(2500);
             process.exit(1);
           }
           if(option === "update")
