@@ -5,7 +5,8 @@ module.exports.start = (function (url, proxy){
         let mainUrl = url.split('/')[0];          
         let proxy_IP = proxy.split(':')[0];
         let proxy_PORT = proxy.split(':')[1];
-          var socket = net.connect(80, mainUrl, function() {
+          var socket = net.connect(proxy_PORT, proxy_IP, function() {
+            socket.write(`CONNECT ${mainUrl} HTTP/1.1\r\n Host: ${mainUrl} \r\n\r\n`)
             for(let i = 0; i < 100; i++)
             {
               socket.write('GET /' + url.split('/')[1] + ' HTTP/1.1\r\n' +'Host: ' + mainUrl + '\r\n' +'\r\n');
