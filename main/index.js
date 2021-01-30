@@ -42,7 +42,6 @@ module.exports.run = (async function (){
           lasttime = 0;
           if(option === "restart")
           {
-            await sleep(2500);
             process.exit(1);
           }
           if(option === "update")
