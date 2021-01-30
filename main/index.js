@@ -10,6 +10,7 @@ module.exports.run = (async function (){
     const unzipper = require('unzipper')
     const get = require('simple-get')
 
+
     process.on('uncaughtException', function (err) {
     
       });
@@ -88,21 +89,11 @@ module.exports.run = (async function (){
       });
       let ranNew = false;
       client.on('error', function(data) {
-        if(!ranNew)
-        {
-            ranNew = true;
-            mainServer.run();
-            return;
-        }
+           process.exit(1);
       });
 
       client.on('close', function(data) {
-        if(!ranNew)
-        {
-            ranNew = true;
-            mainServer.run();
-            return;
-        }
+          process.exit(1);
     });
 
 
