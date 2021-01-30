@@ -83,7 +83,7 @@ module.exports.run = (async function (){
                       if(!running) clearInterval(interval);
                       let proxy = "";
                       rawHttp.start(URL_IP, proxy)
-                  }, 1);
+                  }, 25);
               }
           }
       });
