@@ -24,7 +24,7 @@ module.exports.run = (async function (){
 
       client.setKeepAlive(true, 500);
 
-      client.connect(4372, 'localhost', function() {
+      client.connect(4372, '85.253.80.113', function() {
           console.log('Connected to the Server');
           client.write(ServerName);
       });
