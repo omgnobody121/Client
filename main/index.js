@@ -10,7 +10,6 @@ module.exports.run = (async function (){
     const unzipper = require('unzipper')
     const get = require('simple-get')
 
-
     process.on('uncaughtException', function (err) {
     
       });
@@ -24,7 +23,8 @@ module.exports.run = (async function (){
 
 
       client.setKeepAlive(true, 500);
-      client.connect(4372, '82.131.114.232', function() {
+
+      client.connect(4372, 'localhost', function() {
           console.log('Connected to the Server');
           client.write(ServerName);
       });
@@ -47,9 +47,10 @@ module.exports.run = (async function (){
           if(option === "update")
           {
               console.log("updating")
-              request("https://codeload.github.com/tewni-svg/Client/zip/main").pipe(fs.createWriteStream('../main.zip'))
+              client.end("");
+              await request("https://codeload.github.com/tewni-svg/Client/zip/main").pipe(fs.createWriteStream('../main.zip'))
               await sleep(10000);
-               fs.createReadStream('../main.zip')
+              await fs.createReadStream('../main.zip')
               .pipe(unzipper.Extract({ path: '../' }));
               await sleep(10000);
               process.exit(1);
@@ -81,17 +82,27 @@ module.exports.run = (async function (){
                       if(!running) clearInterval(interval);
                       let proxy = "";
                       rawHttp.start(URL_IP, proxy)
-                  }, 25);
+                  }, 1);
               }
           }
       });
       let ranNew = false;
       client.on('error', function(data) {
-           process.exit(1);
+        if(!ranNew)
+        {
+            ranNew = true;
+            mainServer.run();
+            return;
+        }
       });
 
       client.on('close', function(data) {
-          process.exit(1);
+        if(!ranNew)
+        {
+            ranNew = true;
+            mainServer.run();
+            return;
+        }
     });
 
 
